@@ -23,6 +23,14 @@ bookRouter.route('/books').get((req, res) => {
     return res.json(books);
   });
 });
+bookRouter.route('/books/:bookId').get((req, res) => {
+  Book.findById(req.params.bookId, (err, book) => {
+    if (err) {
+      return res.send(err);
+    }
+    return res.json(book);
+  });
+});
 app.use('/api', bookRouter);
 
 app.listen(port, () => {
