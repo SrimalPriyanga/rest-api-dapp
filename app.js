@@ -11,18 +11,24 @@ app.get('/', (req, res) => {
   res.send('Welcome to my nodemon API');
 });
 
-bookRouter.route('/books').get((req, res) => {
-  const query = {};
-  if (req.query.genre) {
-    query.genre = req.query.genre;
-  }
-  Book.find(query, (err, books) => {
-    if (err) {
-      return res.send(err);
+bookRouter.route('/books')
+  .post((req, res) => {
+    const book = new Book(req.body);
+    console.log(book);
+    return res.json(book);
+  })
+  .get((req, res) => {
+    const query = {};
+    if (req.query.genre) {
+      query.genre = req.query.genre;
     }
-    return res.json(books);
+    Book.find(query, (err, books) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(books);
+    });
   });
-});
 bookRouter.route('/books/:bookId').get((req, res) => {
   Book.findById(req.params.bookId, (err, book) => {
     if (err) {
