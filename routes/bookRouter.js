@@ -6,6 +6,7 @@ function routes(Book) {
   bookRouter.route('/books')
     .post((req, res) => {
       const book = new Book(req.body);
+      // eslint-disable-next-line no-console
       console.log(book);
       book.save();
       return res.status(201).json(book);
